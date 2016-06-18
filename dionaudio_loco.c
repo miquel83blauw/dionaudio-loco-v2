@@ -4,6 +4,8 @@
  * Author:      Miquel Blauw <info@dionaudio.nl>
  *              Copyright 2016
  *
+ * Based on the software of the RPi-DAC writen by Florian Meier  
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * version 2 as published by the Free Software Foundation.
