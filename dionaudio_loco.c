@@ -1,10 +1,10 @@
 /*
  * ASoC Driver for Dion Audio LOCO DAC-AMP
- *  
+ *
  * Author:      Miquel Blauw <info@dionaudio.nl>
  *              Copyright 2016
  *
- * Based on the software of the RPi-DAC writen by Florian Meier  
+ * Based on the software of the RPi-DAC writen by Florian Meier
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,13 +25,8 @@
 #include <sound/soc.h>
 #include <sound/jack.h>
 
-static int snd_rpi_dionaudio_loco_init(struct snd_soc_pcm_runtime *rtd)
-{
-	return 0;
-}
-
-static int snd_rpi_dionaudio_loco_hw_params(struct snd_pcm_substream *substream,
-                                       struct snd_pcm_hw_params *params)
+static int snd_rpi_dionaudio_loco_hw_params(
+	struct snd_pcm_substream *substream, struct snd_pcm_hw_params *params)
 {
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
 	struct snd_soc_dai *cpu_dai = rtd->cpu_dai;
@@ -49,34 +44,51 @@ static struct snd_soc_ops snd_rpi_dionaudio_loco_ops = {
 
 static struct snd_soc_dai_link snd_rpi_dionaudio_loco_dai[] = {
 {
-	.name           = "DionAudio LOCO",
-	.stream_name    = "DionAudio LOCO DAC-AMP",
-	.cpu_dai_name   = "bcm2708-i2s.0",
-	.codec_dai_name = "pcm512x-hifi",
-	.platform_name  = "bcm2708-i2s.0",
-	.codec_name     = "pcm512x-codec",
-	.dai_fmt        = SND_SOC_DAIFMT_I2S | SND_SOC_DAIFMT_NB_NF |
-				SND_SOC_DAIFMT_CBS_CFS,
-	.ops            = &snd_rpi_dionaudio_loco_ops,
-	.init           = snd_rpi_dionaudio_loco_init,
+	.name		= "DionAudio LOCO",
+	.stream_name	= "DionAudio LOCO DAC-AMP",
+	.cpu_dai_name	= "bcm2708-i2s.0",
+	.codec_dai_name	= "pcm5102a-hifi",
+	.platform_name	= "bcm2708-i2s.0",
+	.codec_name	= "pcm5102a-codec",
+	.dai_fmt	= SND_SOC_DAIFMT_I2S |
+			  SND_SOC_DAIFMT_NB_NF |
+			  SND_SOC_DAIFMT_CBS_CFS,
+	.ops		= &snd_rpi_dionaudio_loco_ops,
 },
 };
 
 /* audio machine driver */
 static struct snd_soc_card snd_rpi_dionaudio_loco = {
-	.name         = "snd_rpi_dionaudio_loco",
-	.dai_link     = snd_rpi_dionaudio_loco_dai,
-	.num_links    = ARRAY_SIZE(snd_rpi_dionaudio_loco_dai),
+	.name		= "snd_rpi_dionaudio_loco",
+	.dai_link	= snd_rpi_dionaudio_loco_dai,
+	.num_links	= ARRAY_SIZE(snd_rpi_dionaudio_loco_dai),
 };
 
 static int snd_rpi_dionaudio_loco_probe(struct platform_device *pdev)
 {
+	struct device_node *np;
 	int ret = 0;
 
 	snd_rpi_dionaudio_loco.dev = &pdev->dev;
+
+	np = pdev->dev.of_node;
+	if (np) {
+		struct snd_soc_dai_link *dai = &snd_rpi_dionaudio_loco_dai[0];
+		struct device_node *i2s_np;
+
+		i2s_np = of_parse_phandle(np, "i2s-controller", 0);
+		if (i2s_np) {
+			dai->cpu_dai_name = NULL;
+			dai->cpu_of_node = i2s_np;
+			dai->platform_name = NULL;
+			dai->platform_of_node = i2s_np;
+		}
+	}
+
 	ret = snd_soc_register_card(&snd_rpi_dionaudio_loco);
 	if (ret)
-		dev_err(&pdev->dev, "snd_soc_register_card() failed: %d\n", ret);
+		dev_err(&pdev->dev, "snd_soc_register_card() failed: %d\n",
+			ret);
 
 	return ret;
 }
@@ -86,13 +98,20 @@ static int snd_rpi_dionaudio_loco_remove(struct platform_device *pdev)
 	return snd_soc_unregister_card(&snd_rpi_dionaudio_loco);
 }
 
+static const struct of_device_id snd_rpi_dionaudio_loco_of_match[] = {
+	{ .compatible = "dionaudio,loco-pcm5242-tpa3118", },
+	{ /* sentinel */ },
+};
+MODULE_DEVICE_TABLE(of, snd_rpi_dionaudio_loco_of_match);
+
 static struct platform_driver snd_rpi_dionaudio_loco_driver = {
 	.driver = {
-		.name   = "snd-dionaudio-loco",
-		.owner  = THIS_MODULE,
+		.name		= "snd-dionaudio-loco",
+		.owner		= THIS_MODULE,
+		.of_match_table	= snd_rpi_dionaudio_loco_of_match,
 	},
-	.probe          = snd_rpi_dionaudio_loco_probe,
-	.remove         = snd_rpi_dionaudio_loco_remove,
+	.probe  = snd_rpi_dionaudio_loco_probe,
+	.remove = snd_rpi_dionaudio_loco_remove,
 };
 
 module_platform_driver(snd_rpi_dionaudio_loco_driver);
