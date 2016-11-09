@@ -3,4 +3,4 @@ config SND_BCM2708_SOC_DIONAUDIO_LOCO
 	depends on SND_BCM2708_SOC_I2S || SND_BCM2835_SOC_I2S
 	select SND_SOC_PCM5122
 	help
-	  Say Y or M if you want to add support for Dion Audio LOCO.
+	  Say Y or M if you want to add support for Dion Audio LOCO-V2.
