@@ -1,2 +1,1 @@
-
-The LOCO DAC-AMP is a HAT board for the Raspberry Pi 2/3 model B. It provide a high resolution DA converter and a class D power-amplifier. Togetter with a Raspberry Pi it is a complete solution for a media player or music streamer with outstanding sound quality, all you need is to wire up your loudspeakers and powersupply!
+The LOCO-V2 DAC-AMP is a HAT board for the Raspberry Pi 2/3 model B. It provide a high resolution DA converter in software mode and a 2x 150 watt class D power amplifier. Together with a Raspberry Pi it is your complete solution for a media player or music streamer with outstanding sound quality. All you need is to connect a power supply and to wire up your loudspeakers!
