@@ -1,6 +1,6 @@
 config SND_BCM2708_SOC_DIONAUDIO_LOCO
-	tristate "Support for Dion Audio LOCO DAC-AMP"
+	tristate "Support for Dion Audio LOCO-V2 DAC-AMP"
 	depends on SND_BCM2708_SOC_I2S || SND_BCM2835_SOC_I2S
-	select SND_SOC_PCM5102a
+	select SND_SOC_PCM5122
 	help
 	  Say Y or M if you want to add support for Dion Audio LOCO.
