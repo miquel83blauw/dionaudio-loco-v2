@@ -13,7 +13,7 @@ ifeq ($(CONFIG_ARCH_BCM2835),y)
 endif
 
 
-dtbo-$(RPI_DT_OVERLAYS) += dionaudio-loco.dtbo
+dtbo-$(RPI_DT_OVERLAYS) += dionaudio-loco-v2.dtbo
 
 
 targets += dtbs dtbs_install
