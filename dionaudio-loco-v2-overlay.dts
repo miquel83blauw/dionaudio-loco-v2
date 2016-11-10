@@ -1,6 +1,7 @@
-// Definitions for Dion Audio LOCO-V2 DAC-AMP
-
 /*
+ * Definitions for Dion Audio LOCO-V2 DAC-AMP
+ *  eg. dtoverlay=dionaudio-loco-v2
+ *
  * PCM5242 DAC (in software mode) and TPA3255 AMP.
  */
 
