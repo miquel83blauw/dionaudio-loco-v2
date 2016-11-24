@@ -67,7 +67,7 @@ static struct snd_soc_dai_link snd_rpi_dionaudio_loco-v2_dai[] = {
 	.cpu_dai_name	= "bcm2708-i2s.0",
 	.codec_dai_name	= "pcm512x-hifi",
 	.platform_name	= "bcm2708-i2s.0",
-	.codec_name	= "pcm512x.1-004c",
+	.codec_name	= "pcm512x.1-004d",
 	.dai_fmt	= SND_SOC_DAIFMT_I2S | SND_SOC_DAIFMT_NB_NF |
 				SND_SOC_DAIFMT_CBS_CFS,
 	.ops		= &snd_rpi_dionaudio_loco-v2_ops,
