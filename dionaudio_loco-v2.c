@@ -2,7 +2,7 @@
  * ASoC Driver for Dion Audio LOCO-V2 DAC-AMP
  *
  * Author:      Miquel Blauw <info@dionaudio.nl>
- *              Copyright 2016
+ *              Copyright 2017
  *
  * Based on the software of the RPi-DAC writen by Florian Meier
  *
