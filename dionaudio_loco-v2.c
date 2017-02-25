@@ -72,8 +72,7 @@ static struct snd_soc_dai_link snd_rpi_dionaudio_loco_v2_dai[] = {
 				SND_SOC_DAIFMT_CBS_CFS,
 	.ops		= &snd_rpi_dionaudio_loco_v2_ops,
 	.init		= snd_rpi_dionaudio_loco_v2_init,
-},
-};
+},};
 
 /* audio machine driver */
 static struct snd_soc_card snd_rpi_dionaudio_loco_v2 = {
@@ -120,7 +119,7 @@ static int snd_rpi_dionaudio_loco_v2_remove(struct platform_device *pdev)
 }
 
 static const struct of_device_id dionaudio_of_match[] = {
-	{ .compatible = "dionaudio,dionaudio-loco_v2", },
+	{ .compatible = "dionaudio,dionaudio-loco-v2", },
 	{},
 };
 MODULE_DEVICE_TABLE(of, dionaudio_of_match);
